@@ -10,7 +10,7 @@
   <header>
     <div class="nav" id="siteNav">
       <a class="logo" href="index.html#home">
-        <div class="logo-mark" aria-hidden="true"></div>
+        <img src="logo.png" alt="Katalepsis Logo" class="logo-img" />
         <div>
           <span class="brand">Katalepsis Lab</span>
           <span class="tagline">Macro research sandbox</span>
@@ -20,7 +20,6 @@
       <nav class="nav-links" aria-label="Primary">
         <a class="nav-link" data-page="home" href="index.html#home">Home</a>
         <a class="nav-link" data-page="dashboards" href="index.html#dashboards">Dashboards</a>
-        <a class="nav-link" data-page="chatbot" href="index.html#chatbot">Chatbot</a>
         <a class="nav-link" data-page="optimizer" href="optimizer.html">Optimizer</a>
         <a class="nav-link" data-page="cv" href="cv.html">CV</a>
       </nav>
@@ -35,6 +34,17 @@
       </div>
       <span class="status">MVP</span>
     </section>
+
+    <div class="panel">
+      <h3 style="margin: 0 0 8px;">Model Logic</h3>
+      <p class="help">How the allocation is derived:</p>
+      <ul class="md-list" style="font-size: 0.9rem; color: var(--muted);">
+        <li><strong>Input:</strong> User-defined macro regime (Text-to-Market constraints).</li>
+        <li><strong>Process:</strong> LLM translates regime into relative view vectors (High/Medium/Low).</li>
+        <li><strong>Optimization:</strong> Python backend runs Mean-Variance Optimization (MVO) subject to regime constraints.</li>
+        <li><strong>Risk:</strong> Covariance matrix estimated using regime lookback on ETF proxies.</li>
+      </ul>
+    </div>
 
     <div class="optimizer-layout">
       <div class="optimizer-column">

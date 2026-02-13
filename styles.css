@@ -4,8 +4,11 @@
   --card: #162338;
   --text: #e9eef5;
   --muted: #c4d2e0;
-  --accent: #6ee7b7;
-  --accent-strong: #42c498;
+  
+  /* INSTITUTIONAL BLUE PALETTE */
+  --accent: #60a5fa;        /* Soft Blue (Text/Links) */
+  --accent-strong: #2563eb; /* Royal Blue (Buttons/Active) */
+  
   --edge: rgba(255, 255, 255, 0.08);
   --shadow: 0 18px 46px rgba(0, 0, 0, 0.35);
   --radius: 14px;
@@ -20,8 +23,9 @@ body {
   min-height: 100vh;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at 20% 20%, rgba(110, 231, 183, 0.08), transparent 26%),
-              radial-gradient(circle at 82% 10%, rgba(110, 231, 183, 0.12), transparent 24%),
+  /* Updated background gradients to subtle blue/slate tones */
+  background: radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.08), transparent 26%),
+              radial-gradient(circle at 82% 10%, rgba(37, 99, 235, 0.12), transparent 24%),
               linear-gradient(130deg, #090f19 0%, #0f1726 35%, #0b1322 100%);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -58,13 +62,22 @@ header {
   text-decoration: none;
 }
 
+.logo-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;      /* Matches the original corner curve */
+  object-fit: cover;        /* Ensures the image fills the square without stretching */
+  border: 1px solid var(--edge);
+}
+
 .logo-mark {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(110, 231, 183, 0.15), rgba(66, 196, 152, 0.45));
+  /* Updated logo gradients to blue */
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(37, 99, 235, 0.45));
   border: 1px solid var(--edge);
-  box-shadow: 0 0 0 6px rgba(110, 231, 183, 0.14), 0 12px 30px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 0 6px rgba(96, 165, 250, 0.14), 0 12px 30px rgba(0, 0, 0, 0.28);
 }
 
 .logo span { display: block; line-height: 1.2; }
@@ -97,8 +110,9 @@ header {
 .nav-links .nav-link.active {
   color: var(--accent);
   border-color: var(--edge);
-  background: rgba(110, 231, 183, 0.08);
-  box-shadow: 0 0 0 6px rgba(110, 231, 183, 0.12);
+  /* Active state blue tint */
+  background: rgba(96, 165, 250, 0.08);
+  box-shadow: 0 0 0 6px rgba(96, 165, 250, 0.12);
 }
 
 .nav-toggle {
@@ -146,7 +160,7 @@ section { margin-bottom: 70px; }
   height: 8px;
   border-radius: 999px;
   background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(110, 231, 183, 0.2);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2);
 }
 
 h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin: 16px 0 12px; letter-spacing: -0.4px; }
@@ -183,18 +197,19 @@ h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin: 16px 0 12px; letter-spacing:
 }
 
 .btn-primary {
+  /* Updated gradient to blue */
   background: linear-gradient(120deg, var(--accent) 0%, var(--accent-strong) 100%);
-  color: #041118;
-  box-shadow: 0 12px 30px rgba(66, 196, 152, 0.35);
+  color: #ffffff; /* White text for better contrast on blue */
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35);
 }
 
 .btn-primary:hover,
 .btn-primary:focus-visible,
 .btn-primary:active {
-  background: linear-gradient(120deg, var(--accent) 0%, #93f3d3 100%);
+  background: linear-gradient(120deg, var(--accent) 0%, #3b82f6 100%);
   color: #ffffff;
   border-color: var(--edge);
-  box-shadow: 0 12px 30px rgba(66, 196, 152, 0.42);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.42);
 }
 
 .chips {
@@ -247,7 +262,8 @@ h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin: 16px 0 12px; letter-spacing:
   content: "";
   position: absolute;
   inset: -1px;
-  background: linear-gradient(140deg, rgba(110, 231, 183, 0.15), transparent 55%);
+  /* Updated hover gradient to blue */
+  background: linear-gradient(140deg, rgba(96, 165, 250, 0.15), transparent 55%);
   z-index: 0;
   opacity: 0;
   transition: opacity 0.25s ease;
@@ -262,8 +278,9 @@ h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin: 16px 0 12px; letter-spacing:
   display: inline-flex;
   padding: 6px 10px;
   border-radius: 10px;
-  background: rgba(110, 231, 183, 0.08);
-  border: 1px solid rgba(110, 231, 183, 0.25);
+  /* Updated status pills to blue */
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.25);
   color: var(--text);
   font-weight: 600;
   font-size: 0.9rem;
@@ -297,7 +314,8 @@ h1 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin: 16px 0 12px; letter-spacing:
 .hero-panel {
   display: grid;
   gap: 16px;
-  border-image: linear-gradient(120deg, rgba(110, 231, 183, 0.4), rgba(110, 231, 183, 0)) 1;
+  /* Updated border gradient to blue */
+  border-image: linear-gradient(120deg, rgba(96, 165, 250, 0.4), rgba(96, 165, 250, 0)) 1;
 }
 
 .grid-two {
@@ -339,7 +357,7 @@ select {
 
 select:focus-visible {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(110, 231, 183, 0.18);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.18);
   outline: none;
 }
 
@@ -406,8 +424,9 @@ textarea { resize: vertical; min-height: 60px; }
 }
 
 .message.user .bubble {
-  background: rgba(110, 231, 183, 0.12);
-  border-color: rgba(110, 231, 183, 0.35);
+  /* Updated User Bubble to soft blue */
+  background: rgba(96, 165, 250, 0.12);
+  border-color: rgba(96, 165, 250, 0.35);
   color: var(--text);
 }
 
@@ -580,8 +599,9 @@ footer {
 
 /* Match optimizer chat bubbles to main chatbot styling */
 .chat-entry.user .bubble {
-  background: rgba(110, 231, 183, 0.12);
-  border-color: rgba(110, 231, 183, 0.35);
+  /* Updated User Bubble to soft blue */
+  background: rgba(96, 165, 250, 0.12);
+  border-color: rgba(96, 165, 250, 0.35);
   color: var(--text);
 }
 .chat-entry.assistant .bubble {
@@ -604,7 +624,7 @@ footer {
 }
 
 .chat-history::-webkit-scrollbar-thumb:hover {
-  background: rgba(110, 231, 183, 0.35);
+  background: rgba(96, 165, 250, 0.35); /* Updated hover to blue */
 }
 
 .chat-input-bar {

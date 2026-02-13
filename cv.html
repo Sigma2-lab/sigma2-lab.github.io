@@ -10,7 +10,7 @@
   <header>
     <div class="nav" id="siteNav">
       <a class="logo" href="index.html#home">
-        <div class="logo-mark" aria-hidden="true"></div>
+        <img src="logo.png" alt="Katalepsis Logo" class="logo-img" />
         <div>
           <span class="brand">Katalepsis Lab</span>
           <span class="tagline">Macro research sandbox</span>
@@ -20,7 +20,6 @@
       <nav class="nav-links" aria-label="Primary">
         <a class="nav-link" data-page="home" href="index.html#home">Home</a>
         <a class="nav-link" data-page="dashboards" href="index.html#dashboards">Dashboards</a>
-        <a class="nav-link" data-page="chatbot" href="index.html#chatbot">Chatbot</a>
         <a class="nav-link" data-page="optimizer" href="optimizer.html">Optimizer</a>
         <a class="nav-link" data-page="cv" href="cv.html">CV</a>
       </nav>
@@ -28,10 +27,10 @@
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="home">
       <div>
         <h1>CV & Research Trail</h1>
-        <p class="lede">A living CV that tracks what I'm building, reading, and experimenting with across macro research and portfolio tooling.</p>
+        <p class="lede">A living CV that tracks what I'm building, reading, and experimenting with across macro research and portfolio building.</p>
       </div>
       <div class="chips">
         <a class="btn btn-primary" href="index.html#home">Back to main site</a>
@@ -92,32 +91,21 @@
     </section>
 
     <section>
-      <div class="section-header">
-        <h2>Education & Training</h2>
-        <p class="help">Programs, degrees, and relevant courses.</p>
-      </div>
-      <div class="panel list">
-        <div>
-          <div class="item-title">CFA Level II Exam - Passed</div>
-          <div class="meta">CFAI · 2025</div>
-        </div>
-        <div>
-          <div class="item-title">CFA Level I Exam - Passed</div>
-          <div class="meta">CFAI · 2024</div>
-        </div>
-        <div>
-          <div class="item-title">M.Sc. - Applied Economics</div>
-          <div class="meta">HEC Montréal · 2021-2023</div>
-          <p>Specialized in both macroeconomics (macro modeling, time series analysis) and Development economics.</p>
-          <p>Thesis: Monetary policy and income inequality: evidence from the Eurozone (a SVAR - LP approach).</p>
-          <p>GPA: 4.26</p>
-        </div>
-        <div>
-          <div class="item-title">B.B.A - Finance & IT</div>
-          <div class="meta">HEC Montréal · 2017-2020</div>
-        </div>
-      </div>
-    </section>
+  <div class="section-header">
+    <h2>Education & Credentials</h2>
+  </div>
+  <div class="panel list">
+    <div>
+      <div class="item-title">CFA Level III Candidate</div>
+      <div class="meta">CFA Institute · Exam taken Jan 2026 (Awaiting Results)</div>
+    </div>
+    <div>
+      <div class="item-title">M.Sc. - Applied Economics</div>
+      <div class="meta">HEC Montréal · 2021-2023 · GPA: 4.26</div>
+      <p>Thesis: Monetary policy and income inequality (SVAR - LP approach).</p>
+    </div>
+  </div>
+</section>
 
     <section>
       <div class="section-header">
@@ -139,6 +127,33 @@
     </section>
 
     <section>
+        <div class="section-header">
+          <h2>Technical Arsenal</h2>
+          <p class="help">Methods, frameworks, and stack.</p>
+        </div>
+
+        <div class="panel grid-two">
+        <div>
+          <div class="item-title">Quantitative Frameworks</div>
+          <p>
+            <strong>Time Series & Macro:</strong> VAR/VECM, DSGE, ARIMA, Cointegration analysis.<br>
+            <strong>Machine Learning:</strong> SVR (Yield forecasting), PCA (Curve decomposition).<br>
+            <strong>Portfolio Construction:</strong> Mean-Variance Optimization (MVO), Scenario Analysis, Stress Testing.
+          </p>
+        </div>
+
+        <div>
+          <div class="item-title">Data & Compute</div>
+          <p>
+          <strong>Python Ecosystem:</strong> Pandas, NumPy, Scikit-learn, Statsmodels, Plotly.<br>
+          <strong>Excel:</strong> Advanced Financial Modeling, Solver/Optimization, VBA/Macros, Pivot Tables.<br>
+          <strong>Infrastructure:</strong> SQL, Git, n8n (Workflow automation).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <div class="section-header">
         <h2>Projects</h2>
         <p class="help">Macro dashboards, tools, bots, or research artifacts.</p>
@@ -146,7 +161,7 @@
       <div class="panel list">
         <div>
           <div class="item-title">In Progress: Macro Dashboard & data pipeline</div>
-          <div class="meta">2025</div>
+          <div class="meta">2026</div>
           <p>Python-based data pipeline feeding a macro dashboard for both Canada and the US using FRED and Statstics Canada data to capture a snapshot of the current
             macro environment and guide personal investment decisions.</p>
         </div>
@@ -154,7 +169,7 @@
           <div class="item-title">n8n & Telegram based Portfolio Optimizer MVP</div>
           <div class="meta">2025</div>
           <p>LLM based portfolio management prototype. This MVP is a prompt-based portfolio optimizer, leveraging user economic outlook and LLM asset class allocation choices to be fed
-            into a Python script to perform Mean-Variance Optimization using a sample of stocks and a user-defined lookback period.</p>
+            into a Python script to perform Mean-Variance Optimization using a sample of stocks and a user-defined lookback horizon.</p>
         </div>
       </div>
     </section>
@@ -210,35 +225,6 @@
         </ul>
       </div>
     </section>
-
-
-    <section>
-        <div class="section-header">
-          <h2>Skills</h2>
-          <p class="help">Tooling, languages, methods.</p>
-        </div>
-
-        <div class="panel grid-two">
-        <div>
-        <div class="item-title">Data &amp; Code</div>
-          <p>
-          Python (pandas, NumPy, SciPy, scikit-learn), SQL (basics), STATA, 
-          Excel (macros, advanced formulas, pivot tables), data visualization, APIs.
-          </p>
-        </div>
-
-        <div>
-        <div class="item-title">Macro &amp; Portfolio</div>
-        <p>
-          Time-series analysis, applied econometrics, macro forecasting, 
-          quantitative analysis, forecasting and scenario design, 
-          sensitivity and risk analysis, factor tilts, risk budgeting, 
-          synthesis of complex information into clear reports.
-        </p>
-        </div>
-      </div>
-    </section>
-
 
     <section>
       <div class="section-header">
