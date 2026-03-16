@@ -51,7 +51,7 @@
           <h3 style="margin: 0 0 8px;">What I'm building</h3>
           <div class="chips">
             <span class="pill">Data pipelines</span>
-            <span class="pill">Nowcast dashboards</span>
+            <span class="pill">Macro monitoring dashboards</span>
             <span class="pill">Portfolio experiments</span>
             <span class="pill">Notes & docs</span>
           </div>
@@ -59,7 +59,7 @@
         <div class="grid-two">
           <div class="tile">
             <div class="label">Current focus</div>
-            <div class="value">US + Canada macro plumbing</div>
+            <div class="value">Canada & US macro dashboard (Streamlit, live APIs)</div>
           </div>
           <div class="tile">
             <div class="label">Working principle</div>
@@ -73,62 +73,62 @@
       <div class="section-header">
         <div>
           <h2>Macro Dashboards</h2>
-          <p>Work in progress: country-level macro dashboards covering fiscal and monetary policy variables alongside core economic indicators. UI is being scaffolded while data pipelines firm up.</p>
+          <p>Side-by-side macro monitoring for Canada and the United States. Tracks fiscal health, real yields, growth, inflation, and external accounts — sourced from FRED, Statistics Canada, and the Bank of Canada.</p>
         </div>
-        <span class="status">Status: data plumbing nearly ready</span>
+        <a class="btn btn-primary" href="https://macrodashboard-3djgtnt967kzuv53mbqwgt.streamlit.app" target="_blank" rel="noopener">Launch Dashboard</a>
       </div>
 
       <div class="cards">
         <article class="card">
           <h3>United States</h3>
-          <p>Growth, inflation, policy stance, term structure, liquidity, and market tone. Built for quick regime reads.</p>
-          <span class="status">Status: data pipeline almost ready, UI under construction.</span>
+          <p>Fiscal sustainability, real yield structure, GDP dynamics, and external balance — sourced from FRED via pandas-datareader.</p>
+          <span class="status">Pipeline: live · Data: FRED</span>
           <div class="tiles">
             <div class="tile">
-              <div class="label">Growth Nowcast</div>
-              <div class="value">Last updated: coming soon</div>
+              <div class="label">Fiscal Health</div>
+              <div class="value">Debt, deficit & interest / revenues (TTM)</div>
             </div>
             <div class="tile">
-              <div class="label">Inflation Pulse</div>
-              <div class="value">Sticky CPI, PCE preview</div>
+              <div class="label">Real Yield Spread</div>
+              <div class="value">10Y − 1Y real yield differential (weekly)</div>
             </div>
             <div class="tile">
-              <div class="label">Curve & Term Premium</div>
-              <div class="value">Filling in estimates</div>
+              <div class="label">Growth & Inflation</div>
+              <div class="value">Real GDP (YoY/QoQ) · CPI (YoY/MoM)</div>
             </div>
             <div class="tile">
-              <div class="label">Risk Appetite</div>
-              <div class="value">Equity breadth + credit</div>
+              <div class="label">External Accounts</div>
+              <div class="value">Current account (TTM) · Capital flows Z-score</div>
             </div>
           </div>
         </article>
 
         <article class="card">
           <h3>Canada</h3>
-          <p>Housing, labor market, BoC path, regional spreads, and market breadth. Built to sense turning points early.</p>
-          <span class="status">Status: data pipeline almost ready, UI under construction.</span>
+          <p>Same indicator framework as the US, with data sourced from Statistics Canada and the Bank of Canada Valet API.</p>
+          <span class="status">Pipeline: live · Data: StatCan + BoC</span>
           <div class="tiles">
             <div class="tile">
-              <div class="label">Housing Pulse</div>
-              <div class="value">Inventory & affordability</div>
+              <div class="label">Fiscal Health</div>
+              <div class="value">Debt, deficit & interest / revenues (TTM)</div>
             </div>
             <div class="tile">
-              <div class="label">Labor Market</div>
-              <div class="value">Unemployment & wage trend</div>
+              <div class="label">BoC Balance Sheet</div>
+              <div class="value">3M rolling avg weekly % change in total assets</div>
             </div>
             <div class="tile">
-              <div class="label">BoC Path</div>
-              <div class="value">Market-implied cuts</div>
+              <div class="label">Growth & Inflation</div>
+              <div class="value">Real GDP — monthly output + quarterly expenditure · CPI</div>
             </div>
             <div class="tile">
-              <div class="label">Spreads & Breakevens</div>
-              <div class="value">Coming soon</div>
+              <div class="label">External Accounts</div>
+              <div class="value">Current account (TTM) · Capital flows Z-score</div>
             </div>
           </div>
         </article>
       </div>
 
-      <div class="note">These dashboards are personal research tools. They are not trading recommendations.</div>
+      <div class="note">Personal research tools built for macro monitoring. Not investment advice.</div>
     </section>
   </main>
 
@@ -143,21 +143,6 @@
     </div>
   </footer>
 
-  <script>
-    const navToggle = document.getElementById("navToggle");
-    const siteNav = document.getElementById("siteNav");
-    navToggle?.addEventListener("click", () => {
-      siteNav.classList.toggle("open");
-    });
-
-    // Highlight the active nav item based on the current page
-    const activePage = document.body?.dataset?.page;
-    document.querySelectorAll(".nav-link").forEach((link) => {
-      if (link.dataset.page === activePage) {
-        link.classList.add("active");
-      }
-      link.addEventListener("click", () => siteNav.classList.remove("open"));
-    });
-  </script>
+  <script src="nav.js"></script>
 </body>
 </html>
