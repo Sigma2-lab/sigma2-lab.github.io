@@ -19,7 +19,6 @@
       <button class="nav-toggle" aria-label="Toggle navigation" id="navToggle">Menu</button>
       <nav class="nav-links" aria-label="Primary">
         <a class="nav-link" data-page="home" href="index.html#home">Home</a>
-        <a class="nav-link" data-page="dashboards" href="index.html#dashboards">Dashboards</a>
         <a class="nav-link" data-page="optimizer" href="optimizer.html">Optimizer</a>
         <a class="nav-link" data-page="cv" href="cv.html">CV</a>
       </nav>
@@ -34,7 +33,7 @@
       </div>
       <div class="chips">
         <a class="btn btn-primary" href="index.html#home">Back to main site</a>
-        <a class="btn" href="mailto:katalepsisresearch@gmail.com">Contact</a>
+        <a class="btn" href="mailto:mthpotvin@gmail.com">Contact</a>
       </div>
     </section>
 
@@ -276,7 +275,7 @@
         <p class="help">Quick ways to reach me.</p>
       </div>
       <div class="panel">
-        <p><strong>Email:</strong> <a href="mailto:katalepsisresearch@gmail.com">katalepsisresearch@gmail.com</a></p>
+        <p><strong>Email:</strong> <a href="mailto:mthpotvin@gmail.com">mthpotvin@gmail.com</a></p>
         <p><strong>GitHub:</strong> <a href="https://github.com/katalepsis-lab" target="_blank" rel="noreferrer">github.com/katalepsis-lab</a></p>
         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mathieu-potvin/" target="_blank" rel="noreferrer">https://www.linkedin.com/in/mathieu-potvin/</a></p>
         <p class="note">All content is for research and educational purposes. Nothing here is investment advice.</p>
@@ -286,20 +285,6 @@
     </section>
   </main>
 
-  <script>
-    const navToggle = document.getElementById("navToggle");
-    const siteNav = document.getElementById("siteNav");
-    navToggle?.addEventListener("click", () => {
-      siteNav.classList.toggle("open");
-    });
-
-    const activePage = document.body?.dataset?.page;
-    document.querySelectorAll(".nav-link").forEach((link) => {
-      if (link.dataset.page === activePage) {
-        link.classList.add("active");
-      }
-      link.addEventListener("click", () => siteNav.classList.remove("open"));
-    });
-  </script>
+  <script src="nav.js"></script>
 </body>
 </html>
