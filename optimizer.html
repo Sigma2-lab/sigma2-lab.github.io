@@ -51,15 +51,26 @@
         <div class="panel">
           <div>
             <h3 style="margin: 0 0 6px;">Connection</h3>
-            <p class="help" style="margin: 0;">Point the optimizer at your backend and optionally forward your own OpenAI key. The key is only sent with each request and never stored.</p>
+            <p class="help" style="margin: 0;">Your API key is sent directly to our server to make a single Anthropic request and is never stored or logged.</p>
           </div>
+
+          <details class="setup-guide">
+            <summary>First time? Quick setup</summary>
+            <ol class="setup-steps">
+              <li>The <strong>Backend URL</strong> is pre-filled — leave it unless you're running your own instance.</li>
+              <li>Get an <strong>Anthropic API key</strong> from <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noreferrer">console.anthropic.com/settings/keys</a> and paste it below. It never leaves your browser except as part of each API request.</li>
+              <li>Describe a <strong>macro regime</strong> in the chat (e.g. "soft landing with sticky inflation", "stagflation shock") and hit Send. The LLM will propose allocation bands you can adjust before optimizing.</li>
+            </ol>
+          </details>
+
           <div style="margin-top: 10px;">
             <label for="optimizerBackendUrl">Backend URL</label>
             <input type="text" id="optimizerBackendUrl" name="optimizerBackendUrl" aria-label="Optimizer backend URL" placeholder="https://optimizer-e4vz.onrender.com" />
           </div>
           <div style="margin-top: 10px;">
-            <label for="optimizerApiKey">OpenAI API key</label>
-            <textarea id="optimizerApiKey" name="optimizerApiKey" aria-label="OpenAI API key" rows="2" placeholder="Paste your sk- key. It is sent only with each request and never stored."></textarea>
+            <label for="optimizerApiKey">Anthropic API key</label>
+            <textarea id="optimizerApiKey" name="optimizerApiKey" aria-label="Anthropic API key" rows="2" placeholder="sk-ant-...  →  sent per-request, never stored"></textarea>
+            <p class="help" style="margin-top: 5px;">Don't have one? <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noreferrer">console.anthropic.com/settings/keys</a></p>
           </div>
         </div>
 
@@ -90,8 +101,8 @@
               </select>
             </div>
             <div class="allocation-row">
-              <label for="alloc-fixed-income">Fixed Income</label>
-              <select id="alloc-fixed-income" name="fixed_income">
+              <label for="alloc-bonds">Fixed Income</label>
+              <select id="alloc-bonds" name="bonds">
                 <option value="low">Low</option>
                 <option value="medium" selected>Medium</option>
                 <option value="high">High</option>
@@ -106,8 +117,8 @@
               </select>
             </div>
             <div class="allocation-row">
-              <label for="alloc-alternatives">Alternatives</label>
-              <select id="alloc-alternatives" name="alternatives">
+              <label for="alloc-alts">Alternatives</label>
+              <select id="alloc-alts" name="alts">
                 <option value="low">Low</option>
                 <option value="medium" selected>Medium</option>
                 <option value="high">High</option>
@@ -147,21 +158,8 @@
     </div>
   </main>
 
+  <script src="nav.js"></script>
   <script>
-    const navToggle = document.getElementById("navToggle");
-    const siteNav = document.getElementById("siteNav");
-    navToggle?.addEventListener("click", () => {
-      siteNav.classList.toggle("open");
-    });
-
-    const activePage = document.body?.dataset?.page;
-    document.querySelectorAll(".nav-link").forEach((link) => {
-      if (link.dataset.page === activePage) {
-        link.classList.add("active");
-      }
-      link.addEventListener("click", () => siteNav.classList.remove("open"));
-    });
-
     // Optimizer-specific UI wiring stays isolated to this page.
     if (document.body?.dataset?.page === "optimizer") {
       const chatHistory = document.getElementById("optimizerChatHistory");
@@ -176,17 +174,17 @@
 
       const allocationSelects = {
         equities: document.getElementById("alloc-equities"),
-        fixed_income: document.getElementById("alloc-fixed-income"),
+        bonds: document.getElementById("alloc-bonds"),
         commodities: document.getElementById("alloc-commodities"),
-        alternatives: document.getElementById("alloc-alternatives"),
+        alts: document.getElementById("alloc-alts"),
         cash: document.getElementById("alloc-cash")
       };
 
       let confirmedBands = {
         equities: "medium",
-        fixed_income: "medium",
+        bonds: "medium",
         commodities: "medium",
-        alternatives: "medium",
+        alts: "medium",
         cash: "medium"
       };
       let currentProposalId = null;
@@ -245,9 +243,9 @@
       function readBandsFromForm() {
         return {
           equities: allocationSelects.equities.value,
-          fixed_income: allocationSelects.fixed_income.value,
+          bonds: allocationSelects.bonds.value,
           commodities: allocationSelects.commodities.value,
-          alternatives: allocationSelects.alternatives.value,
+          alts: allocationSelects.alts.value,
           cash: allocationSelects.cash.value
         };
       }
@@ -279,16 +277,16 @@
 
       async function handleMacroViewSubmit(message, thinkingHandle) {
         const apiBase = getApiBaseUrl();
-        const openaiKey = apiKeyInput?.value?.trim();
-        if (!openaiKey) {
+        const anthropicKey = apiKeyInput?.value?.trim();
+        if (!anthropicKey) {
           thinkingHandle?.entry?.remove();
-          appendMessage("assistant", "Add your OpenAI API key, then try again.");
+          appendMessage("assistant", "Add your Anthropic API key, then try again.");
           return;
         }
 
         try {
           const data = await postJson(apiBase + "/proposal", {
-            api_key: openaiKey,
+            api_key: anthropicKey,
             macro_regime: message
           });
           const allocations = data?.qualitative_allocations || {};
@@ -298,9 +296,9 @@
           thinkingHandle?.entry?.remove();
 
           const summary = "<strong>Proposed bands</strong>: equities " + (allocations.equities || "n/a") +
-            ", fixed income " + (allocations.fixed_income || "n/a") +
+            ", fixed income " + (allocations.bonds || "n/a") +
             ", commodities " + (allocations.commodities || "n/a") +
-            ", alternatives " + (allocations.alternatives || "n/a") +
+            ", alternatives " + (allocations.alts || "n/a") +
             ", cash " + (allocations.cash || "n/a") +
             ".<br><br>" + justification;
           appendMessage("assistant", summary, { asHtml: true });
@@ -385,19 +383,23 @@
           setWeightsTable(normalized);
 
           const weightLines = normalized.map((item) => item.ticker + ": " + (Number(item.weight) * 100).toFixed(0) + "%");
-          const metrics = optimizeResult?.metrics;
-          const metricsList = metrics && typeof metrics === "object"
-            ? Object.entries(metrics).map(([k, v]) => k + ": " + (typeof v === "number" ? v.toFixed(4) : String(v)))
-            : [];
+          const metricsList = [
+            "Expected return: " + ((optimizeResult.expected_return ?? 0) * 100).toFixed(1) + "%",
+            "Volatility: " + ((optimizeResult.volatility ?? 0) * 100).toFixed(1) + "%",
+            "Sharpe ratio: " + (optimizeResult.sharpe_ratio ?? 0).toFixed(3)
+          ];
+
+          const fallbackWarning = optimizeResult.rf_fallback_used
+            ? "<br><br><em style=\"color: var(--muted);\">Note: risk-free rate unavailable — results use an estimated rate and may be slightly less accurate.</em>"
+            : "";
 
           thinking?.entry?.remove();
           appendMessage(
             "assistant",
             "<strong>Optimization complete</strong><br>" +
             (weightLines.length ? weightLines.join("<br>") : "No weights returned.") +
-            (metricsList.length
-              ? "<br><br><ul class=\"md-list\">" + metricsList.map((m) => "<li>" + m + "</li>").join("") + "</ul>"
-              : ""),
+            "<br><br><ul class=\"md-list\">" + metricsList.map((m) => "<li>" + m + "</li>").join("") + "</ul>" +
+            fallbackWarning,
             { asHtml: true }
           );
         } catch (err) {
@@ -436,11 +438,16 @@
         handleAllocationConfirm(bands);
       });
 
-      // Seed the chat with a friendly system message.
-      appendMessage(
-        "assistant",
-        "Enter a macro regime and any constraints. I'll propose asset-class allocation bands, then we can optimize."
-      );
+      // Seed the chat — prompt setup if no key is present yet.
+      if (apiKeyInput?.value?.trim()) {
+        appendMessage("assistant", "Enter a macro regime and any constraints. I'll propose asset-class allocation bands, then we can optimize.");
+      } else {
+        appendMessage(
+          "assistant",
+          "Welcome! To get started: paste your <strong>Anthropic API key</strong> in the Connection panel on the left, then describe a macro regime here (e.g. <em>\"soft landing with sticky inflation\"</em>).",
+          { asHtml: true }
+        );
+      }
     }
   </script>
 </body>
