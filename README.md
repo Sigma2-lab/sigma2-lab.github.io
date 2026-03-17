@@ -1,1 +1,1 @@
-# katalepsis-lab.github.io
+# sigma2-lab.github.io
