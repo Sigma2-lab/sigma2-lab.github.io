@@ -88,6 +88,35 @@
       </div>
 
       <div class="optimizer-column">
+        <div class="panel">
+          <h3 style="margin: 0 0 8px;">Lookback period</h3>
+          <p class="help" style="margin: 0 0 10px;">Price history window used to estimate returns and covariance.</p>
+          <div style="display: flex; gap: 16px; margin-bottom: 10px;">
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="radio" name="lookbackMode" value="years" checked /> Years back
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="radio" name="lookbackMode" value="custom" /> Custom range
+            </label>
+          </div>
+          <div id="lookbackYearsSection">
+            <label for="lookbackYears">Years</label>
+            <input type="number" id="lookbackYears" min="1" max="9" value="3" style="width: 70px;" />
+          </div>
+          <div id="lookbackCustomSection" style="display: none;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <div>
+                <label for="lookbackStart">Start date</label>
+                <input type="date" id="lookbackStart" />
+              </div>
+              <div>
+                <label for="lookbackEnd">End date</label>
+                <input type="date" id="lookbackEnd" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="panel allocation-panel">
           <h3>Asset-class allocation (bands)</h3>
           <p class="help">AI suggestions land here. You can adjust manually before confirming.</p>
@@ -171,6 +200,27 @@
       const apiKeyInput = document.getElementById("optimizerApiKey");
       const DEFAULT_OPTIMIZER_BACKEND_URL = "https://optimizer-e4vz.onrender.com";
       if (backendUrlInput) backendUrlInput.value = DEFAULT_OPTIMIZER_BACKEND_URL;
+
+      // Lookback panel toggle
+      document.querySelectorAll("input[name='lookbackMode']").forEach((radio) => {
+        radio.addEventListener("change", () => {
+          const isCustom = radio.value === "custom" && radio.checked;
+          document.getElementById("lookbackYearsSection").style.display = isCustom ? "none" : "block";
+          document.getElementById("lookbackCustomSection").style.display = isCustom ? "block" : "none";
+        });
+      });
+
+      function readLookback() {
+        const mode = document.querySelector("input[name='lookbackMode']:checked")?.value;
+        if (mode === "years") {
+          const years = parseInt(document.getElementById("lookbackYears")?.value, 10);
+          return { lookback_years: isNaN(years) ? 3 : years };
+        }
+        return {
+          lookback_start: document.getElementById("lookbackStart")?.value || null,
+          lookback_end: document.getElementById("lookbackEnd")?.value || null
+        };
+      }
 
       const allocationSelects = {
         equities: document.getElementById("alloc-equities"),
@@ -303,6 +353,7 @@
             ".<br><br>" + justification;
           appendMessage("assistant", summary, { asHtml: true });
           applyAllocationSuggestion(allocations);
+          appendMessage("assistant", "Review the suggested bands on the right and adjust if needed, then click <strong>Confirm allocation bands</strong> to proceed.", { asHtml: true });
         } catch (err) {
           thinkingHandle?.entry?.remove();
           const friendly = err && err.message ? err.message : "Unable to reach backend.";
@@ -376,7 +427,8 @@
 
           const optimizeResult = await postJson(apiBase + "/optimize", {
             proposal_id: currentProposalId,
-            qualitative_allocations: bands
+            qualitative_allocations: bands,
+            ...readLookback()
           });
 
           const normalized = normalizeWeights(optimizeResult).filter((item) => Number(item.weight) > 0.01);
